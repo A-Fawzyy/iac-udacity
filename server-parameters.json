@@ -1,0 +1,25 @@
+[{
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "UdacityProject"
+    },
+    {
+        "ParameterKey": "WebImageAMI",
+        "ParameterValue": "ami-0b152cfd354c4c7a4"
+    },
+    {
+        "ParameterKey": "WebGroupMinSize",
+        "ParameterValue": "2"
+    },
+    {
+        "ParameterKey": "WebGroupMaxSize",
+        "ParameterValue": "6"
+    },
+    {
+        "ParameterKey": "WebGroupDesiredSize",
+        "ParameterValue": "4"
+    },
+    {
+        "ParameterKey": "KeyPair",
+        "ParameterValue": "UdacityProjectKey"
+    }
+]
