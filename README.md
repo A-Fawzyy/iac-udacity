@@ -12,6 +12,16 @@ In YAML code, the `${EnvironmentName}` would be substituted with `UdacityProject
 
 
 #### Launching Notes:
-- Launch deploy-all.sh to deploy both network and server
+- First you need to create the bucket so use the following code `./bucket.sh`
 
-- Launch delete-all.sh to delete the network and server
+- Secondly you need to move the index.html file to the bucket by using the following `aws s3 cp index.html s3://809061358119-udagram-bucket`
+
+- Now you can launch the network template by using `./network.sh`
+
+- Then you can launch the server template by using `./server.sh`
+
+- In order to delete everything up after finishing you can use the following command `./delete-all.sh`
+
+#### URL:
+
+http://iac-s-webap-4nfjkbbhn83a-753528566.us-east-1.elb.amazonaws.com/

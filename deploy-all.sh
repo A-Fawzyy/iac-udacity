@@ -1,2 +1,2 @@
 echo "Deploying network and server stacks"
-./deploy-network.sh && ./deploy-server.sh
+./network.sh && ./server.sh

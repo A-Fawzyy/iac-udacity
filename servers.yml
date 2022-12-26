@@ -1,4 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
+Description: >
+  This template creates the server
 
 Parameters:
     EnvironmentName:
@@ -11,7 +13,7 @@ Parameters:
 
     WebGroupMinSize:
       Description: EC2 Minimum number of instances
-      Type: AWS::SSM::Parameter::Value<List<String>>
+      Type: String
 
     WebGroupMaxSize:
       Description: EC2 Maximum number of instances
@@ -74,9 +76,10 @@ Resources:
           #!/bin/bash
           apt-get update -y
           apt-get install apache2 -y
-          systemctl start apache2.service
           cd /var/www/html
-          echo "Udacity Demo Web Server Up and Running!" > index.html
+          rm index.html
+          aws s3 cp index.html s3://809061358119-udagram-bucket
+          systemctl start apache2.service
       ImageId:
         Ref: WebImageAMI
       SecurityGroups:
@@ -85,7 +88,8 @@ Resources:
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
         Ebs:
-          Volumes: "10"
+          VolumeSize: '10'
+          DeleteOnTermination: true
 
   WebAppGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
@@ -150,26 +154,6 @@ Resources:
       VpcId: 
         Fn::ImportValue:
           Fn::Sub: "${EnvironmentName}-VPCID"
-
-  UdagramS3ReadOnlyAccess:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - ec2.amazonaws.com
-            Action:
-              - "sts:AssumeRole"
-      ManagedPolicyArns:
-        - arn:aws:iam:/policy/AmazonSSMManagedInstanceCore
-  UdagramProfileROle:
-    Type: AWS::IAM::InstanceProfile
-    Properties:
-      Roles:
-        - !Ref UdagramS3ReadOnlyAccess
       
 
 Outputs:
